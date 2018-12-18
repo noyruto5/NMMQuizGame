@@ -43,8 +43,7 @@ export default {
             numberOfQuestions: 0,
             actualScore: 0,
             timeCount: 0,
-            countDown: 0,
-            nextLevel: 'easy'
+            countDown: 0
         }
     },
 
@@ -114,13 +113,15 @@ export default {
                         message: 'You passed this level.',
                         okButtonText: "OK"
                     }).then(() => {
-                        if (this.nextLevel == 'easy') this.nextLevel = 'average'
-                        else if (this.nextLevel == 'average') this.nextLevel = 'hard'
-                        this.$navigateTo(Levels, {
-                            props: {
-                                level: this.nextLevel
-                            }
-                        });
+                        switch (this.level) {
+                            case 'easy':
+                                localStorage.setItem('averageLevel', 'true');
+                                break;
+                            case 'average':
+                                localStorage.setItem('hardLevel', 'true');
+                                break;
+                        }
+                        this.$navigateTo(Levels);
                     });
                 }
             });
@@ -192,5 +193,9 @@ Button {
 #label-score {
     margin-left: 50%;
     margin-right: 10;
+}
+.page {
+    background-color: #FFFFFF;
+    color: #3D4852;
 }
 </style>

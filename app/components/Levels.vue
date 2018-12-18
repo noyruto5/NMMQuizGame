@@ -4,10 +4,10 @@
             <Label class="action-bar-title" text="Levels"></Label>
         </ActionBar>
 
-        <StackLayout margin="10">
-            <Button text="EASY" @tap="goToEasy"/>
-            <Button text="AVERAGE" @tap="goToAverage" :isEnabled="averageLevel"/>
-            <Button text="HARD" @tap="goToHard" :isEnabled="hardLevel"/>
+        <StackLayout>
+            <Button text="EASY" class="button btn-levelEasy" @tap="goToEasy"/>
+            <Button text="AVERAGE" class="button btn-levelAverage" @tap="goToAverage"/>
+            <Button text="HARD" class="button btn-levelHard" @tap="goToHard"/>
         </StackLayout>
     </Page>
 </template>
@@ -22,8 +22,6 @@ export default {
 
     data () {
         return {
-            averageLevel: false,
-            hardLevel: false
         }
     },
 
@@ -40,39 +38,53 @@ export default {
             
         },
         goToAverage() {
-            alert({message: 'Items needed to perfect: 10', okButtonText: "OK"})
-            .then(() => {
-                this.$navigateTo(QuizPage, {
-                    props: {
-                        level: 'average'
-                    }
+            if (localStorage.getItem('averageLevel') === 'true') {
+                alert({message: 'Items needed to perfect: 10', okButtonText: "OK"})
+                .then(() => {
+                    this.$navigateTo(QuizPage, {
+                        props: {
+                            level: 'average'
+                        }
+                    });
                 });
-            });
+            } else {
+                alert({message: 'You must pass the Easy level first.', okButtonText: "OK"});
+            }
         },
         goToHard() {
-            alert({message: 'Items needed to perfect: 15', okButtonText: "OK"})
-            .then(() => {
-                this.$navigateTo(QuizPage, {
-                    props: {
-                        level: 'hard'
-                    }
+            if (localStorage.getItem('hardLevel') === 'true') {
+                alert({message: 'Items needed to perfect: 15', okButtonText: "OK"})
+                .then(() => {
+                    this.$navigateTo(QuizPage, {
+                        props: {
+                            level: 'hard'
+                        }
+                    });
                 });
-            });
+            } else {
+                alert({message: 'You must pass the Average level first.', okButtonText: "OK"});
+            }
         }
     },
 
     created () {
-        switch (this.level) {
-            case 'average':
-                this.averageLevel = true;
-                break;
-            case 'hard':
-                this.hardLevel = true;
-                break;
-        }
-
-        console.log(this.averageLevel);
-        console.log(this.hardLevel);
+        
     }
 }
 </script>
+
+<style scoped>
+    .button, {
+        color: white;
+        height: 33.3%;
+    }
+    .btn-levelEasy{
+        background-color: #2779BD;
+    }
+    .btn-levelAverage {
+        background-color: #38A89D;
+    }
+    .btn-levelHard {
+        background-color: #606F7B;
+    }
+</style>

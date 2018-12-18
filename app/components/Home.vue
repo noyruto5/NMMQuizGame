@@ -4,9 +4,15 @@
             <Label class="action-bar-title" text="NMMQuizGame"></Label>
         </ActionBar>
 
-        <StackLayout margin="10">
-            <Button text="New Game" class="button blue" @tap="newGame"/>
-            <Button text="Continue" class="button green" @tap="continueGame"/>
+        <StackLayout>
+            <StackLayout class="header-div">
+                <Label text="Welcome" />
+                <Label text="to" />
+                <Label text="NONESCOST Multi Media Quiz Game" />
+            </StackLayout>
+            <Button text="New Game" class="button btn-newgame" @tap="newGame"/>
+            <Button text="Continue" class="button btn-contgame" @tap="continueGame"/>
+            <Button text="Tutorials" class="button btn-tutorial" @tap="goToTutorials"/>
         </StackLayout>
     </Page>
 </template>
@@ -23,11 +29,14 @@
 
         methods: {
             newGame() {
-                console.log('Button new game was pressed.');
+                localStorage.clear();
                 this.$navigateTo(Levels);
             },
             continueGame() {
-                console.log('Button continue game was pressed.');
+                this.$navigateTo(Levels);
+            },
+            goToTutorials() {
+                console.log('Tutorials button was pressed.');
             }
         }
     };
@@ -47,12 +56,21 @@
     }
     .button {
         color: white;
-        height: 10%;
+        height: 25%;
     }
-    .blue {
-        background-color: blue;
+    .btn-newgame {
+        background-color: #2779BD;
     }
-    .green {
-        background-color: green;
+    .btn-contgame {
+        background-color: #38A89D;
+    }
+    .btn-tutorial {
+        background-color: #606F7B;
+    }
+    .header-div {
+        padding: 10;
+        font-size: 20;
+        color: #DE751F;
+        height: 25%;
     }
 </style>
